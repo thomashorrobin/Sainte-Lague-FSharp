@@ -12,13 +12,31 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hi");
-            Election.EligibilityFilter(ListModule.OfSeq(election2014));
-            //Election.EligibilityFilter(ListModule.OfSeq(election2011));
-            //Election.EligibilityFilter(ListModule.OfSeq(election2008));
-            //Election.EligibilityFilter(ListModule.OfSeq(election2005));
-            //Election.EligibilityFilter(ListModule.OfSeq(election2002));
+            Console.WriteLine("=====");
+            foreach (var election in allElections)
+            {
+                List<Party> parties = Election.RunElection(ListModule.OfSeq(election), 120).ToList();
+                foreach (Party party in parties)
+                {
+                    Console.WriteLine(string.Format("{0}: {1}",party.PartyName, party.TotalSeats.ToString()));
+                }
+                Console.WriteLine("=====");
+            }
             Console.ReadLine();
+        }
+        
+        static List<List<Party>> allElections
+        {
+            get
+            {
+                var elections = new List<List<Party>>();
+                elections.Add(election2014);
+                elections.Add(election2011);
+                elections.Add(election2008);
+                elections.Add(election2005);
+                elections.Add(election2002);
+                return elections;
+            }
         }
 
         static List<Party> election2014
